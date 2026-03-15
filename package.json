@@ -1,0 +1,33 @@
+{
+  "name": "@scuton/json-diff",
+  "version": "1.0.0",
+  "description": "Compare two JSON files and show differences. Color-coded terminal output.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "json-diff": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "dev": "tsup --watch"
+  },
+  "keywords": ["json", "diff", "compare", "cli", "color"],
+  "author": "Scuton Technology",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "tsup": "^8.0.0",
+    "vitest": "^2.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
