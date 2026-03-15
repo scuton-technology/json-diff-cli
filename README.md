@@ -1,45 +1,37 @@
-# @scuton/json-diff
+<div align="center">
 
-Compare two JSON files and show differences with color-coded terminal output.
+# json-diff
 
-Works as both a **CLI tool** and a **programmatic library**.
+**Compare two JSON files and show differences. Color-coded terminal output.**
 
-## Installation
+[![npm](https://img.shields.io/npm/v/@scuton/json-diff?style=flat-square)](https://www.npmjs.com/package/@scuton/json-diff)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat-square)](https://www.typescriptlang.org/)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](package.json)
+
+</div>
+
+---
+
+## Install
 
 ```bash
-# Global CLI
-npm install -g @scuton/json-diff
-
-# Project dependency
 npm install @scuton/json-diff
 ```
 
 ## CLI Usage
 
 ```bash
-json-diff <file1.json> <file2.json>
+npx @scuton/json-diff old.json new.json
 ```
 
-### Example
-
-```bash
-$ json-diff old-config.json new-config.json
-
+```
   + added:    database.pool = 10
   - removed:  debug
   ~ changed:  server.port: 3000 → 8080
 
   Summary: 1 added, 1 removed, 1 changed
 ```
-
-### Options
-
-| Flag           | Description          |
-| -------------- | -------------------- |
-| `-h`, `--help` | Show help            |
-| `--no-color`   | Disable color output |
-
-Set the `NO_COLOR` environment variable to disable colors globally.
 
 ## Programmatic API
 
@@ -51,41 +43,20 @@ const result = diffJson(
   { server: { port: 8080 }, database: { pool: 10 } }
 );
 
-console.log(result.identical); // false
-console.log(result.added);     // [{ path: 'database', type: 'added', newValue: { pool: 10 } }]
-console.log(result.removed);   // [{ path: 'debug', type: 'removed', oldValue: true }]
-console.log(result.changed);   // [{ path: 'server.port', type: 'changed', oldValue: 3000, newValue: 8080 }]
+result.identical  // false
+result.added      // [{ path: 'database', type: 'added', newValue: { pool: 10 } }]
+result.removed    // [{ path: 'debug', type: 'removed', oldValue: true }]
+result.changed    // [{ path: 'server.port', type: 'changed', oldValue: 3000, newValue: 8080 }]
 ```
 
-## API Types
+## API
 
-```typescript
-interface DiffEntry {
-  path: string;
-  type: 'added' | 'removed' | 'changed';
-  oldValue?: any;
-  newValue?: any;
-}
+| Function | Signature | Description |
+|----------|-----------|-------------|
+| `diffJson` | `(a: any, b: any) => DiffResult` | Deep recursive JSON comparison |
 
-interface DiffResult {
-  added: DiffEntry[];
-  removed: DiffEntry[];
-  changed: DiffEntry[];
-  identical: boolean;
-}
-
-function diffJson(a: any, b: any): DiffResult;
-function formatValue(val: any): string;
-```
-
-## Features
-
-- Deep recursive comparison of nested objects and arrays
-- Dot-notation paths for easy identification (`server.port`, `items[2]`)
-- Color-coded output: green (added), red (removed), yellow (changed)
-- Zero dependencies at runtime
-- Dual CJS/ESM output with TypeScript declarations
+`DiffResult` contains `added`, `removed`, `changed` arrays and an `identical` boolean.
 
 ## License
 
-MIT - Scuton Technology
+MIT — [Scuton Technology](https://scuton.com)
